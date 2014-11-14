@@ -17,14 +17,14 @@
 
 import java.util.Random;
 
-public class kindergarten{
+public class kindergarten implements gradeLevel{
     private int firstDigit, secondDigit, answer;
     private Random randNum = new Random();
 
     public int kProblem(){
 
         firstDigit = randNum.nextInt(11);
-        secondDigit = randNum.nextInt(10-firstDigit);
+        secondDigit = randNum.nextInt(11-firstDigit);
         return randNum.nextInt(2);
     }
 
@@ -46,7 +46,7 @@ public class kindergarten{
         else {
             //checks to make sure subtraction doesn't come out negative
             while (firstDigit < secondDigit)
-               secondDigit = randNum.nextInt(10);
+                secondDigit = randNum.nextInt(10);
             kSubtraction(firstDigit, secondDigit);
             return (firstDigit + " - " + secondDigit + " = ?");
         }
