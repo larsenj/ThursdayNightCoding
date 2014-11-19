@@ -34,6 +34,9 @@ public class MCTest
             case '1':
                 grade = new firstGrade();
                 break;
+            case '3':
+            grade = new ThirdGrade();
+            break;
             default:
                 grade = new kindergarten();
                 //System.out.println("That level not yet implemented");
