@@ -1,4 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Last Modified: 11/25/2014 -->
+<!-- Modifications made: added a bunch of strings to use -->
 <resources>
     <string name="app_name">Math Constructor</string>
+
+    <string name="appName">Math Problem Constructor</string>
+    <string name="gradeK">Kindergarten</string>
+    <string name="grade1">1st Grade</string>
+    <string name="grade2">2nd Grade</string>
+    <string name="grade3">3rd Grade</string>
+    <string name="grade4">4th Grade</string>
+    <string name="grade5">5th Grade</string>
+    <string name="mathCorrect">Correct!</string>
+    <string name="mathNext">Next</string>
+    <string name="mathPrev">Previous</string>
+    <string name="mathResponseHint">Put answer here</string>
+    <string name="mathSubmit">Submit answer</string>
+    <string name="mathWrong">Answer is incorrect.</string>
+    <string name="menu">Menu</string>
+    <string name="menuButton">Construct</string>
+    <string name="menuETHint">Number of problems</string>
+    <string name="menuNumPrompt">Number of problems: (Max limit is 60)</string>
+    <string name="resultCorrect">Correct: </string>
+    <string name="resultIncorrect">Incorrect: </string>
+    <string name="resultTitle">Results:</string>
+    <string name="selectGrade">Select Grade Level:</string>
 </resources>
