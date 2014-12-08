@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Author: James Luo -->
-<!-- Last Modified: 11/25/2014 -->
+<!-- Last Modified: 12/8/2014 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
@@ -16,17 +16,26 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="@string/resultTitle"
+        android:textColor="#0000ff"
+        android:textSize="100sp" />
+    <TextView
+        android:id="@+id/letterGrade"
+        android:layout_below="@id/results"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textColor="@color/red"
         android:textSize="100sp" />
     <TextView
         android:id="@+id/correctAnchor"
-        android:layout_below="@id/results"
+        android:layout_below="@id/letterGrade"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="@string/resultCorrect"
         android:textSize="64sp" />
     <TextView
         android:id="@+id/correct"
-        android:layout_below="@id/results"
+        android:layout_below="@id/letterGrade"
         android:layout_toRightOf="@id/correctAnchor"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -45,11 +54,32 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:textSize="64sp" />
-    <Button
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+    <TextView
+        android:id="@+id/skippedAnchor"
+        android:layout_below="@id/wrongAnchor"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:text="@string/menu" />
+        android:text="@string/resultSkipped"
+        android:textSize="64sp" />
+    <TextView
+        android:id="@+id/skipped"
+        android:layout_below="@id/wrongAnchor"
+        android:layout_toRightOf="@id/skippedAnchor"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="64sp" />
+    <TextView
+        android:id="@+id/timeAnchor"
+        android:layout_below="@id/skippedAnchor"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/resultTime"
+        android:textSize="64sp" />
+    <TextView
+        android:id="@+id/time"
+        android:layout_below="@id/skippedAnchor"
+        android:layout_toRightOf="@id/timeAnchor"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textSize="64sp" />
 </RelativeLayout>
