@@ -1,11 +1,11 @@
+// Author: James Luo
+// Last modified: 12/7/2014
+
 package com.mathproblemconstructor;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.TextView;
 
 public class Result extends Activity
@@ -14,7 +14,7 @@ public class Result extends Activity
 	protected void onCreate(Bundle b)
 	{
 		super.onCreate(b);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setTitle("");
 		setContentView(R.layout.activity_result);
 		Intent i = getIntent();
 		int numCorrect = i.getExtras().getInt("CORRECT");
@@ -24,13 +24,5 @@ public class Result extends Activity
 		TextView wrong = (TextView) findViewById(R.id.wrong);
 		correct.setText(numCorrect + " out of " + number);
 		wrong.setText(numWrong + " out of " + number);
-		Button button = (Button) findViewById(R.id.button);
-		button.setOnClickListener(new View.OnClickListener()
-		{
-            public void onClick(View v)
-            {
-                finish();
-            }
-        });
 	}
 }
