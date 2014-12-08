@@ -1,5 +1,5 @@
 // Author: James Luo
-// Last Modified: 11/24/2014
+// Last Modified: 12/7/2014
 
 package com.mathproblemconstructor;
 
@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -16,13 +15,18 @@ import android.widget.Toast;
 public class Menu extends Activity
 {
     private EditText et;
-    private final int MAXPROB = 60;
+    private final int MAXPROB = 30;
     private int grade, numProb;
+    
+    private void mkToast(String s)
+	{
+	    Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
+	}
 	@Override
 	protected void onCreate(Bundle b)
 	{
         super.onCreate(b);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setTitle("");
         setContentView(R.layout.activity_menu);
 		grade = 0;
 		numProb = 15;
@@ -51,22 +55,21 @@ public class Menu extends Activity
                 if(!et.getText().toString().isEmpty())
                 {
                     updateNumProb();
-                    if(numProb <= MAXPROB)
+                    if(numProb <= 0)
+                        mkToast("Number should be more than 0");
+                    else if(numProb > MAXPROB)
+                        mkToast("Number should be no more than " + MAXPROB);
+                    else
                     {
                         Intent i = new Intent(getBaseContext(), Math.class);
                         i.putExtra("GRADE", grade);
                         i.putExtra("NUMBER", numProb);
                         startActivity(i);
                     }
-                    else mkToast("Number should be no more than " + MAXPROB);
                 }
                 else mkToast("Enter the number of problems you want first!");
             }
         });
-	}
-	private void mkToast(String s)
-	{
-	    Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
 	}
 	private void updateNumProb()
 	{
