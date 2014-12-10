@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Author: James Luo -->
+<!-- Last Modified: 12/9/2014 -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mathproblemconstructor.Math" >
+    <item
+        android:id="@+id/action_results"
+        android:icon="@drawable/ic_action_forward"
+        android:title="@string/title_activity_result"
+        android:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/action_tts"
+        android:icon="@drawable/ic_action_volume_on"
+        android:title="@string/title_tts"
+        android:showAsAction="ifRoom|withText" />
+</menu>
