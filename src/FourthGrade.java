@@ -1,12 +1,14 @@
 // Author: James Luo
-// Last Modified: 11/23/2014
+// Last modified: 12/7/2014
 
-import java.util.*;
+package com.mathproblemconstructor;
 
-public class FourthGrade implements gradeLevel
+import java.util.Random;
+
+public class FourthGrade implements GradeLevel
 {
-    private final int ADD = 100;
-    private final int MULT = 30;
+    private final int ADD = 80;
+    private final int MULT = 24;
     private final int WHAT = 12;
     private int a, b, c, d, answer;
     private Random r = new Random();
