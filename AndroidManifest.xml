@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Last Modified: 11/25/2014 -->
-<!-- Modified by: James Luo -->
+<!-- Author: James Luo -->
+<!-- Last Modified: 12/9/2014 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mathproblemconstructor"
     android:versionCode="1"
     android:versionName="1.0" >
+    <supports-screens
+        android:smallScreens="false"
+        android:normalScreens="false"
+        android:largeScreens="false"
+        android:xlargeScreens="true"
+        android:requiresSmallestWidthDp="720" />
     <uses-sdk
         android:minSdkVersion="18"
         android:targetSdkVersion="18" />
@@ -24,12 +30,21 @@
         </activity>
         <activity
             android:name=".Math"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_math"
-            android:windowSoftInputMode="stateHidden|adjustPan" >
+            android:parentActivityName="com.mathproblemconstructor.Menu"
+            android:windowSoftInputMode="stateHidden|adjustResize" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mathproblemconstructor.Menu" />
         </activity>
         <activity
             android:name=".Result"
-            android:label="@string/title_activity_result" >
+            android:label="@string/title_activity_result"
+            android:parentActivityName="com.mathproblemconstructor.Menu" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mathproblemconstructor.Menu" />
         </activity>
     </application>
 </manifest>
