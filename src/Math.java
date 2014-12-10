@@ -1,5 +1,5 @@
 // Author: James Luo
-// Last modified: 12/7/2014
+// Last modified: 12/9/2014
 
 package com.mathproblemconstructor;
 
@@ -26,11 +26,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.util.TypedValue;
+import android.speech.tts.TextToSpeech;
+import java.util.Locale;
+
 public class Math extends FragmentActivity
+    implements TextToSpeech.OnInitListener
 {
     private GradeLevel gl;
     private MathProblem[] problems;
     private ProblemsPagerAdapter ppa;
+private TextToSpeech tts;
+private TextView problem;
     private ViewPager vp;
     private int grade, numCorrect, numProb, numSkipped;
     private long startTime;
@@ -46,8 +53,10 @@ public class Math extends FragmentActivity
             probNum = args.getInt("PROBLEM");
             ((TextView) v.findViewById(R.id.num)).setText(
                 Integer.toString(probNum + 1) + ") ");
-            ((TextView) v.findViewById(R.id.problem)).setText(
-                problems[probNum].getProblem());
+            //((TextView) v.findViewById(R.id.problem)).setText(
+            //    problems[probNum].getProblem());
+problem = (TextView) v.findViewById(R.id.problem);
+problem.setText(problems[probNum].getProblem());
             Button submit = (Button) v.findViewById(R.id.submit);
             final EditText response =
                 (EditText) v.findViewById(R.id.userResponse);
@@ -68,6 +77,34 @@ public class Math extends FragmentActivity
                     }
                 }
             });
+int stringLength = ((TextView) v.findViewById(R.id.problem)).getText().toString().length();
+if(stringLength < 10)
+    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 200);
+else if(stringLength < 20)
+    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 175);
+else if(stringLength < 30)
+    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 160);
+else if(stringLength < 40)
+    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 140);
+else if(stringLength < 50)
+    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 120);
+else if(stringLength < 60)
+    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 100);
+else
+    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 75);
+/*
+DisplayMetrics metrics = new DisplayMetrics();
+getWindowManager().getDefaultDisplay().getMetrics(metrics);
+float scale = metrics.density;
+((TextView) v.findViewById(R.id.problem)).setText("density: " + scale
+    + "\ndensityDpi: " + metrics.densityDpi + "\nheightPixels: " + metrics.heightPixels
+    + "\nscaledDensity: " + metrics.scaledDensity + "\nwidthPixels: " + metrics.widthPixels
+    + "\nxdpi: " + metrics.xdpi + "\nydpi: " + metrics.ydpi
+    + "\nviewWidth: " + ((TextView) v.findViewById(R.id.problem)).getWidth());
+((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 10*scale);
+*/
+// how to set text size of textview dynamically for different screens  values-ldpi
+// android dynamically change text size
             return(v);
         }
     }
@@ -113,6 +150,15 @@ public class Math extends FragmentActivity
     {
         Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
     }
+
+
+    private void speakOut()
+	{
+	    String text = problem.getText().toString();
+	    tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+	}
+
+
     @Override
     protected void onCreate(Bundle b)
     {
@@ -154,6 +200,7 @@ public class Math extends FragmentActivity
         ab.setDisplayShowTitleEnabled(false);
         numCorrect = 0;
         numSkipped = 0;
+tts = new TextToSpeech(this, this);
         startTime = System.currentTimeMillis();
     }
     @Override
@@ -163,6 +210,43 @@ public class Math extends FragmentActivity
         mi.inflate(R.menu.math, m);
         return(super.onCreateOptionsMenu(m));
     }
+    
+    @Override
+	public void onDestroy()
+	{
+	    if(tts != null)
+	    {
+	        tts.stop();
+	        tts.shutdown();
+	    }
+	    super.onDestroy();
+	}
+	@Override
+	public void onInit(int status)
+	{
+	    if(status == TextToSpeech.SUCCESS)
+	    {
+	        int result = tts.setLanguage(Locale.US);
+	        if(result == TextToSpeech.LANG_MISSING_DATA ||
+	            result == TextToSpeech.LANG_NOT_SUPPORTED)
+	        {
+	            Toast.makeText(getBaseContext(), 
+	                "This language is not supported",
+	                Toast.LENGTH_SHORT).show();
+	        }
+	        else
+	        {
+	            //speakOut();
+	        }
+	    }
+	    else
+	    {
+	        Toast.makeText(getBaseContext(), 
+	            "Initialization failed",
+	            Toast.LENGTH_SHORT).show();
+	    }
+	}
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -173,6 +257,9 @@ public class Math extends FragmentActivity
                 return(true);
             case R.id.action_results:
                 goToResults();
+                return(true);
+            case R.id.action_tts:
+                speakOut();
                 return(true);
             default:
                 return(super.onOptionsItemSelected(item));
