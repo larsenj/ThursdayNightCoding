@@ -1,0 +1,158 @@
+import java.util.*;
+
+public class Kindergarten implements gradeLevel
+{
+    private int n1, n2, n3, answer;
+    private Random randNum = new Random();
+
+    public int problem()
+    {
+        return randNum.nextInt(10);
+    }
+
+    public void addition()
+    {
+        n1 = randNum.nextInt(5) + 1;
+        n2 = randNum.nextInt(5) + 1;
+        n3 = n1 + n2;
+    }
+
+    public void additionWithoutOne()
+    {
+        n1 = randNum.nextInt(4) + 2;
+        n2 = randNum.nextInt(4) + 2;
+        n3 = n1 + n2;
+    }
+
+    public String getProblem()
+    {
+        int operation = problem();
+
+        if (operation == 0)
+        {
+            addition();
+            answer = n1;
+            return ("? + " + n2 + " = " + n3);
+        }
+
+        if (operation == 1)
+        {
+            addition();
+            answer = n2;
+            return (n1 + " + ? = " + n3);
+        }
+
+        if (operation == 2)
+        {
+            addition();
+            answer = n3;
+            return (n1 + " + " + n2 + " = ? ");
+        }
+ 
+        if (operation == 3)
+        {
+            int newNum = randNum.nextInt(9) + 1;
+            answer = (10 - newNum);
+            return (newNum + " + ? = 10");
+        }
+
+        if (operation == 4)
+        {
+            addition();
+            answer = n2;
+            return (n3 + " - " + n1 + " = ? ");
+        }
+
+        if (operation == 5)
+        {
+            addition();
+            answer = n1;
+            return (n3 + " - " + n2 + " = ? ");
+        }
+
+        if (operation == 6)
+        {
+            addition();
+            String word = "objects";
+            if (n1 == 1)
+                word = "object";
+            String words = "If you have " + n1 + " " + word + " and add " + n2;
+            words = words + " more, how many total objects do you have?";
+            answer = n3;
+            return words;
+        }
+
+        if (operation == 7)
+        {
+            addition();
+            String word = "objects";
+            if (n3 == 1)
+                word = "object";
+            String words = "If you have " + n3 + " " + word + " and give " + n2;
+            words = words + " away, how many total objects do you have left?";
+            answer = n1;
+            return words;
+        }
+
+        if (operation == 8)
+        {
+            addition();
+            int num1 = n1 + 1;
+            int num2 = n3 - num1;
+            answer = num1;
+            String words = n3 + " = " + n1 + " + " + n2;
+            words = words + ". " + n3 + " also equals " + num2 + " + ? ";
+            return words;
+        }
+
+        assert (operation == 9);
+        
+        String[] names = {"Kelly", "Megan", "Nadira", "Gina", "James", "Robert", "Mark", "Jose"};
+        String[] things = {"toys", "dolls", "marbles", "books", "rubber bands"};
+        int nameIndex = randNum.nextInt(8);
+        int thingIndex = randNum.nextInt(5);
+        String pronoun = "her";
+        String pronoun2 = "she";
+        if (nameIndex > 3)
+        {
+            pronoun = "him";
+            pronoun2 = "he";
+        }
+        additionWithoutOne();
+        String words = names[nameIndex] + " has " + n1 + " " + things[thingIndex] + ". ";
+        words = words + "If you give " + pronoun + " " + n2 + " more, how many total does ";
+        words = words + pronoun2 + " have? ";
+        answer = n3;
+        return words;
+    }
+
+    public int getAnswer()
+    {
+        return answer;
+    }
+}
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
