@@ -1,9 +1,11 @@
+package com.mathproblemconstructor;
+
 import java.util.*;
 
 // Constructs problems of the second grade level, primarily representing more advanced
 // addition and subtraction (up to 100).  
 
-public class SecondGrade implements gradeLevel
+public class SecondGrade implements GradeLevel
 {
     private int n1, n2, n3, answer;
     private Random randNum = new Random();

@@ -9,7 +9,9 @@ functions:
     problem.
 */
 
-public interface gradeLevel {
+package com.mathproblemconstructor;
+
+public interface GradeLevel {
     public String getProblem();
     public int getAnswer();
 }

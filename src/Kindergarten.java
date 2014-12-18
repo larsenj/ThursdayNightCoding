@@ -1,6 +1,8 @@
+package com.mathproblemconstructor;
+
 import java.util.*;
 
-public class Kindergarten implements gradeLevel
+public class Kindergarten implements GradeLevel
 {
     private int n1, n2, n3, answer;
     private Random randNum = new Random();

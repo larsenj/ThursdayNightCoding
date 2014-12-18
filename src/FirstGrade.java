@@ -1,6 +1,8 @@
+package com.mathproblemconstructor;
+
 import java.util.Random;
 
-public class firstGrade implements gradeLevel {
+public class FirstGrade implements GradeLevel {
 
     private int firstDigit, secondDigit, thirdDigit, answer;
     private Random randNum = new Random();
