@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Author: James Luo -->
+<!-- Last Modified: 12/18/2014 -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" >
+    <TextView
+        android:id="@+id/problem"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+    <EditText
+        android:id="@+id/userResponse"
+        android:hint="@string/mathResponseHint"
+        android:inputType="number"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:singleLine="true" />
+    <com.mathproblemconstructor.Scratchpad
+        android:id="@+id/scratchpad"
+        android:layout_above="@id/userResponse"
+        android:layout_below="@id/problem"
+        android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
+    <TextView
+        android:id="@+id/correct"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/mathCorrect"
+        android:textColor="@color/green"
+        android:textSize="200sp"
+        android:visibility="invisible" />
+    <TextView
+        android:id="@+id/wrong"
+        android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/mathWrong"
+        android:textColor="@color/red"
+        android:textSize="200sp"
+        android:visibility="invisible" />
+</RelativeLayout>

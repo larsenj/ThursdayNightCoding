@@ -12,16 +12,20 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mathproblemconstructor.Menu" >
     <TextView
+android:id="@+id/tvt"
         android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/appName"
-        android:textSize="60sp" />
+/><!--
+        android:textSize="60sp" /-->
     <TextView
+android:id="@+id/tvs"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="@string/selectGrade"
-        android:textSize="48sp" />
+/><!--
+        android:textSize="48sp" /-->
     <RadioGroup
         android:id="@+id/rg"
         android:layout_height="wrap_content"
@@ -32,43 +36,51 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/gradeK"
-            android:textSize="24sp" />
+/><!--
+            android:textSize="24sp" /-->
         <RadioButton
             android:id="@+id/grade1"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/grade1"
-            android:textSize="24sp" />
+/><!--
+            android:textSize="24sp" /-->
         <RadioButton
             android:id="@+id/grade2"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/grade2"
-            android:textSize="24sp" />
+/><!--
+            android:textSize="24sp" /-->
         <RadioButton
             android:id="@+id/grade3"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/grade3"
-            android:textSize="24sp" />
+/><!--
+            android:textSize="24sp" /-->
         <RadioButton
             android:id="@+id/grade4"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/grade4"
-            android:textSize="24sp" />
+/><!--
+            android:textSize="24sp" /-->
         <RadioButton
             android:id="@+id/grade5"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="@string/grade5"
-            android:textSize="24sp" />
+/><!--
+            android:textSize="24sp" /-->
     </RadioGroup>
     <TextView
+android:id="@+id/tvp"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="@string/menuNumPrompt"
-        android:textSize="48sp" />
+/><!--
+        android:textSize="48sp" /-->
     <EditText
         android:id="@+id/et"
         android:hint="@string/menuETHint"
@@ -83,5 +95,6 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:text="@string/menuButton"
-        android:textSize="48sp" />
+/><!--
+        android:textSize="48sp" /-->
 </LinearLayout>

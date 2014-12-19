@@ -1,5 +1,5 @@
 // Author: James Luo
-// Last modified: 12/9/2014
+// Last modified: 12/18/2014
 
 package com.mathproblemconstructor;
 
@@ -7,27 +7,24 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.NavUtils;
-import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import android.util.TypedValue;
-import android.speech.tts.TextToSpeech;
 import java.util.Locale;
 
 public class Math extends FragmentActivity
@@ -36,9 +33,9 @@ public class Math extends FragmentActivity
     private GradeLevel gl;
     private MathProblem[] problems;
     private ProblemsPagerAdapter ppa;
-private TextToSpeech tts;
-private TextView problem;
-    private ViewPager vp;
+private Scratchpad scratch;
+    private TextToSpeech tts;
+    private MyViewPager vp;
     private int grade, numCorrect, numProb, numSkipped;
     private long startTime;
     
@@ -51,60 +48,45 @@ private TextView problem;
             View v = li.inflate(R.layout.problem, vg, false);
             final Bundle args = getArguments();
             probNum = args.getInt("PROBLEM");
-            ((TextView) v.findViewById(R.id.num)).setText(
-                Integer.toString(probNum + 1) + ") ");
-            //((TextView) v.findViewById(R.id.problem)).setText(
-            //    problems[probNum].getProblem());
-problem = (TextView) v.findViewById(R.id.problem);
-problem.setText(problems[probNum].getProblem());
-            Button submit = (Button) v.findViewById(R.id.submit);
+            ((TextView) v.findViewById(R.id.problem)).setText(problems[probNum].getProblem());
             final EditText response =
                 (EditText) v.findViewById(R.id.userResponse);
             final TextView correct = (TextView) v.findViewById(R.id.correct);
             final TextView wrong = (TextView) v.findViewById(R.id.wrong);
-            submit.setOnClickListener(new View.OnClickListener()
+            response.setOnKeyListener(new View.OnKeyListener()
             {
-                public void onClick(View v)
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent ke)
                 {
-                    if(!response.getText().toString().isEmpty())
+                    if((ke.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER))
                     {
-                        correct.setVisibility(View.INVISIBLE);
-                        wrong.setVisibility(View.INVISIBLE);
-                        if(problems[probNum].isCorrect(response.getText().toString()))
-                            correct.setVisibility(View.VISIBLE);
-                        else
-                            wrong.setVisibility(View.VISIBLE);
+                        if(!response.getText().toString().isEmpty())
+                        {
+                            correct.setVisibility(View.INVISIBLE);
+                            wrong.setVisibility(View.INVISIBLE);
+                            if(problems[probNum].isCorrect(response.getText().toString()))
+                                correct.setVisibility(View.VISIBLE);
+                            else
+                                wrong.setVisibility(View.VISIBLE);
+                        }
+                        return(true);
                     }
+                    return(false);
                 }
             });
-int stringLength = ((TextView) v.findViewById(R.id.problem)).getText().toString().length();
-if(stringLength < 10)
-    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 200);
-else if(stringLength < 20)
-    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 175);
-else if(stringLength < 30)
-    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 160);
-else if(stringLength < 40)
-    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 140);
-else if(stringLength < 50)
-    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 120);
-else if(stringLength < 60)
-    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 100);
-else
-    ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 75);
-/*
-DisplayMetrics metrics = new DisplayMetrics();
-getWindowManager().getDefaultDisplay().getMetrics(metrics);
-float scale = metrics.density;
-((TextView) v.findViewById(R.id.problem)).setText("density: " + scale
-    + "\ndensityDpi: " + metrics.densityDpi + "\nheightPixels: " + metrics.heightPixels
-    + "\nscaledDensity: " + metrics.scaledDensity + "\nwidthPixels: " + metrics.widthPixels
-    + "\nxdpi: " + metrics.xdpi + "\nydpi: " + metrics.ydpi
-    + "\nviewWidth: " + ((TextView) v.findViewById(R.id.problem)).getWidth());
-((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 10*scale);
-*/
-// how to set text size of textview dynamically for different screens  values-ldpi
-// android dynamically change text size
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            float scale = metrics.density;
+            int stringLength = ((TextView) v.findViewById(R.id.problem)).getText().toString().length();
+            if(stringLength < 10)
+                ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 100*scale);
+            else if(stringLength < 40)
+                ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 50*scale);
+            else if(stringLength < 50)
+                ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 40*scale);
+            else
+                ((TextView) v.findViewById(R.id.problem)).setTextSize(TypedValue.COMPLEX_UNIT_SP, 30*scale);
             return(v);
         }
     }
@@ -129,6 +111,11 @@ float scale = metrics.density;
         }
     }
     
+    private void clearDoodle()
+    {
+        scratch = (Scratchpad) findViewById(R.id.scratchpad);
+        scratch.clear();
+    }
     private void goToResults()
     {
         Intent i = new Intent(getBaseContext(), Result.class);
@@ -150,15 +137,6 @@ float scale = metrics.density;
     {
         Toast.makeText(getBaseContext(), s, Toast.LENGTH_SHORT).show();
     }
-
-
-    private void speakOut()
-	{
-	    String text = problem.getText().toString();
-	    tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-	}
-
-
     @Override
     protected void onCreate(Bundle b)
     {
@@ -176,7 +154,7 @@ float scale = metrics.density;
                 gl = new FirstGrade();
                 break;
             case 2:
-                gl = new FourthGrade();//SecondGrade();                        // Fix later
+                gl = new SecondGrade();
                 break;
             case 3:
                 gl = new ThirdGrade();
@@ -185,7 +163,7 @@ float scale = metrics.density;
                 gl = new FourthGrade();
                 break;
             case 5:
-                gl = new FourthGrade();//FifthGrade();                         // Fix later
+                gl = new FifthGrade();
         }
         problems = new MathProblem[numProb];
         for(int j = 0; j < problems.length; j++)
@@ -193,14 +171,14 @@ float scale = metrics.density;
             problems[j] = new MathProblem(gl);
         }
         ppa = new ProblemsPagerAdapter(getSupportFragmentManager());
-        vp = (ViewPager) findViewById(R.id.pager);
+        vp = (MyViewPager) findViewById(R.id.pager);
         vp.setAdapter(ppa);
         ActionBar ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setDisplayShowTitleEnabled(false);
         numCorrect = 0;
         numSkipped = 0;
-tts = new TextToSpeech(this, this);
+        tts = new TextToSpeech(this, this);
         startTime = System.currentTimeMillis();
     }
     @Override
@@ -209,8 +187,7 @@ tts = new TextToSpeech(this, this);
         MenuInflater mi = getMenuInflater();
         mi.inflate(R.menu.math, m);
         return(super.onCreateOptionsMenu(m));
-    }
-    
+    }   
     @Override
 	public void onDestroy()
 	{
@@ -234,10 +211,6 @@ tts = new TextToSpeech(this, this);
 	                "This language is not supported",
 	                Toast.LENGTH_SHORT).show();
 	        }
-	        else
-	        {
-	            //speakOut();
-	        }
 	    }
 	    else
 	    {
@@ -245,8 +218,7 @@ tts = new TextToSpeech(this, this);
 	            "Initialization failed",
 	            Toast.LENGTH_SHORT).show();
 	    }
-	}
-    
+	}    
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -254,6 +226,9 @@ tts = new TextToSpeech(this, this);
         {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
+                return(true);
+            case R.id.action_doodle:
+                clearDoodle();
                 return(true);
             case R.id.action_results:
                 goToResults();
@@ -265,6 +240,16 @@ tts = new TextToSpeech(this, this);
                 return(super.onOptionsItemSelected(item));
         }
     }
+    private void speakOut()
+	{
+	    if(tts.isSpeaking())
+	        tts.stop();
+	    else
+	    {
+	        String text = problems[vp.getCurrentItem()].getProblem();
+	        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+	    }
+	}
     private void updateNums()
     {
         for(int i = 0; i < problems.length; i++)
